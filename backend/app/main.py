@@ -1,34 +1,26 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.core.config import settings
-from app.api.v1.router import api_router
+from app.api.models import router as models_router
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(
-        title="World Models Platform",
-        description="API pour la plateforme de recherche sur les world models (I-JEPA, V-JEPA2, VideoMAE, DINOv2, CLIP, etc.)",
-        version="0.1.0",
-        docs_url="/docs",
-        redoc_url="/redoc",
-    )
+    app = FastAPI(title="World Models Platform API")
 
-    # CORS
+    # CORS for local development only; this should be restricted in production.
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.CORS_ORIGINS,
+        allow_origins=["http://localhost:5173"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
 
-    # Routes
-    app.include_router(api_router, prefix="/api/v1")
+    app.include_router(models_router, prefix="/api/models", tags=["models"])
 
-    @app.get("/health", tags=["health"])
+    @app.get("/health")
     async def health_check():
-        return {"status": "ok", "service": "world-model-api"}
+        return {"status": "ok"}
 
     return app
 

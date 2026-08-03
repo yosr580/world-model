@@ -371,3 +371,49 @@ docker compose -f ../infra/docker-compose.yml exec postgres psql -U postgres -d 
 
 ### Git
 - `git log -1 --oneline` n'a pas pu être exécuté : le répertoire n'est pas un dépôt Git (`.git` manquant), donc aucun hash de commit n'est disponible.
+
+## Étape 3 — API FastAPI minimale + healthcheck + endpoint /api/models
+
+**Objectif** : Mettre en place une API FastAPI minimale avec un endpoint de vérification de santé et un endpoint CRUD pour les modèles.
+
+### Fichiers créés / modifiés
+- `backend/app/schemas/model.py`
+  - Schémas Pydantic V2 pour le modèle : `ModelBase`, `ModelCreate`, `ModelRead`, `ModelListResponse`
+- `backend/app/api/models.py`
+  - Routeur FastAPI minimal pour :
+    - `GET /api/models/`
+    - `GET /api/models/{model_id}`
+    - `POST /api/models/`
+  - Validation de l’unicité `(name, family)`
+  - Vérification d’existence de `source_paper_id`
+- `backend/app/main.py`
+  - Application FastAPI créée via `create_app()`
+  - CORS local pour `http://localhost:5173`
+  - Montée du routeur `models_router` sur `/api/models`
+  - Endpoint `GET /health`
+- `backend/tests/test_health.py`
+  - test `test_health_returns_ok`
+  - utilisation autonome de `TestClient(app)`
+
+### Nettoyage effectué
+- Suppression complète de `backend/app/api/v1/`
+  - code mort issu d’un scaffold antérieur
+  - routeur et endpoints v1 non utilisés après migration vers `backend/app/api/models.py`
+- Suppression de `backend/app/core/security.py`
+  - dépendances manquantes dans `requirements.txt` (`python-jose`, `passlib`)
+- Suppression de `backend/app/core/celery_app.py`
+  - dépendances non présentes et code non fonctionnel dans le contexte actuel
+
+### Incidents rencontrés
+| Incident | Cause réelle | Résolution |
+|---|---|---|
+| Redirection `307` sur `GET` / `POST /api/models` sans slash final | Comportement natif FastAPI lorsque le routeur est monté avec un préfixe | Utilisation du slash final `/api/models/` dans les tests |
+| Erreur `422 JSON decode error` avec `curl.exe` sous PowerShell | Échappement JSON mal géré par le shell PowerShell/curl | Utilisation de `Invoke-RestMethod` / `Invoke-WebRequest` natif PowerShell |
+| Conflit `409` sur la contrainte d’unicité `(name, family)` | Deux tentatives de création avec le même nom/family | Comportement attendu validant la contrainte d’unicité |
+| Vérification du `201` exact pour la création | Le code de statut HTTP exact `201 Created` n’a pas été isolé et confirmé sur un test séparé | À vérifier dans une session future pour rester honnête sur l’incertitude |
+
+### Résultats des vérifications
+- `python -m pytest tests/test_health.py -v` : `1 passed`
+- `GET /health` → `200`
+- `GET /api/models/` → `200` avec liste vide
+- `POST /api/models/` → création réussie d’un objet retournant un `UUID` et `created_at`
