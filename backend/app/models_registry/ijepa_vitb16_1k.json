@@ -2,7 +2,7 @@
   "id": "ijepa_vitb16_1k",
   "family": "JEPA",
   "loader": "transformers.AutoModel",
-  "checkpoint": "facebook/ijepa_vitb16_1k",
+  "checkpoint": "facebook/ijepa_vith16_1k",
   "modality": "image",
   "supports_predictor": false,
   "compatible_tests": ["T1", "T2", "T3", "T6", "T8"],

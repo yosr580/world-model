@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.models import router as models_router
+from app.api.tests import router as tests_router
 
 
 def create_app() -> FastAPI:
@@ -17,6 +18,7 @@ def create_app() -> FastAPI:
     )
 
     app.include_router(models_router, prefix="/api/models", tags=["models"])
+    app.include_router(tests_router, prefix="/api/tests", tags=["tests"])
 
     @app.get("/health")
     async def health_check():
