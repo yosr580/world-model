@@ -20,7 +20,8 @@ def list_models(
     query = db.query(Model)
     total = query.count()
     items = query.offset(skip).limit(page_size).all()
-    return ModelListResponse(items=items, total=total, page=page, page_size=page_size)
+    total_pages = (total + page_size - 1) // page_size
+    return ModelListResponse(items=items, total=total, page=page, page_size=page_size, total_pages=total_pages)
 
 
 @router.post("/", response_model=ModelRead, status_code=201)

@@ -1,0 +1,12 @@
+{
+  "id": "vit_mae_base",
+  "family": "MAE",
+  "loader": "transformers.AutoModel",
+  "checkpoint": "facebook/vit-mae-base",
+  "modality": "image",
+  "supports_predictor": false,
+  "compatible_tests": ["T1", "T2", "T3", "T6", "T8", "T10"],
+  "execution_tier": "live",
+  "license": "open-weight",
+  "paper_id": null
+}

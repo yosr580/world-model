@@ -1,0 +1,14 @@
+{
+  "id": "genie3",
+  "family": "Genie",
+  "loader": null,
+  "checkpoint": null,
+  "reference_repo": null,
+  "modality": "video (monde interactif jouable, genere depuis texte/image)",
+  "supports_predictor": true,
+  "compatible_tests": [],
+  "execution_tier": "archived_kaggle",
+  "license": "closed-api",
+  "paper_id": null,
+  "access_notes": "Famille Genie de DeepMind (Genie 2, Genie 3). Aucun checkpoint public ni API d'inference accessible a ce jour. Ne peut pas etre charge ni teste par cette plateforme. Inclus uniquement a des fins de taxonomie/comparaison dans l'encyclopedie, sur la base de publications/demos publiques, jamais reproduit independamment."
+}

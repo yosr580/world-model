@@ -1,0 +1,17 @@
+{
+  "id": "nvidia_sana_wm",
+  "family": "Cosmos",
+  "loader": "diffusers_custom",
+  "checkpoint": "nvidia/sana-wm",
+  "reference_repo": null,
+  "modality": "video (generation jusqu'a 60s, controle camera)",
+  "supports_predictor": true,
+  "compatible_tests": [
+    "T8",
+    "T9"
+  ],
+  "execution_tier": "job_async",
+  "license": "open-weight",
+  "paper_id": null,
+  "access_notes": "World model open-source de 2.6B parametres, plus petit que Cosmos 3 complet, publie mai 2026."
+}

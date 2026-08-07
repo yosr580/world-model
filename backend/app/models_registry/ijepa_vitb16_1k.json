@@ -1,0 +1,12 @@
+{
+  "id": "ijepa_vitb16_1k",
+  "family": "JEPA",
+  "loader": "transformers.AutoModel",
+  "checkpoint": "facebook/ijepa_vitb16_1k",
+  "modality": "image",
+  "supports_predictor": false,
+  "compatible_tests": ["T1", "T2", "T3", "T6", "T8"],
+  "execution_tier": "live",
+  "license": "open-weight",
+  "paper_id": null
+}

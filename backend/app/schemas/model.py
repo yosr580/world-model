@@ -29,6 +29,21 @@ class ModelCreate(ModelBase):
     source_paper_id: UUID | None = None
 
 
+class ModelUpdate(BaseModel):
+    """Schéma pour la mise à jour partielle d'un modèle (PATCH)."""
+
+    name: str | None = Field(None, min_length=1)
+    family: str | None = None
+    checkpoint_id: str | None = None
+    license: str | None = None
+    paradigm: str | None = None
+    modality: str | None = None
+    params_millions: float | None = None
+    verified_reproducible: bool | None = None
+    source_paper_id: UUID | None = None
+    manifest: dict | None = None
+
+
 class ModelRead(ModelBase):
     id: UUID
     source_paper_id: UUID | None = None
@@ -42,5 +57,6 @@ class ModelListResponse(BaseModel):
     total: int
     page: int
     page_size: int
+    total_pages: int
 
     model_config = ConfigDict(from_attributes=True)

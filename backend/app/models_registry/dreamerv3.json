@@ -1,0 +1,17 @@
+{
+  "id": "dreamerv3",
+  "family": "Dreamer",
+  "loader": "custom_jax",
+  "checkpoint": null,
+  "reference_repo": "https://github.com/danijar/dreamerv3",
+  "modality": "state/pixel (Atari, Crafter, DeepMind Control, Minecraft)",
+  "supports_predictor": true,
+  "compatible_tests": [
+    "T9",
+    "T12"
+  ],
+  "execution_tier": "archived_kaggle",
+  "license": "open-weight",
+  "paper_id": "arxiv:2301.04104",
+  "access_notes": "Code source ouvert (JAX), pas de checkpoint pretraine officiel unique sur un hub. Des checkpoints communautaires existent (ex. SafeDreamer, 80+ checkpoints sur Hugging Face) mais necessitent un environnement JAX specifique, non compatible transformers."
+}

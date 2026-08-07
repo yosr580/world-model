@@ -1,0 +1,14 @@
+{
+  "id": "world_models_ha_schmidhuber",
+  "family": "World Models (VAE-RNN-Controller)",
+  "loader": "custom_torch",
+  "checkpoint": null,
+  "reference_repo": "https://github.com/hardmaru/WorldModelsExperiments",
+  "modality": "pixel (CarRacing-v0, VizDoom)",
+  "supports_predictor": true,
+  "compatible_tests": ["T9", "T12"],
+  "execution_tier": "job_async",
+  "license": "open-weight",
+  "paper_id": "arxiv:1803.10122",
+  "access_notes": "Papier fondateur du terme 'world model' (2018). VAE + MDN-RNN + controleur lineaire, assez petit pour etre reentraine sur CPU/GPU en temps raisonnable. Aucun checkpoint HuggingFace officiel; le loader devra cloner reference_repo."
+}

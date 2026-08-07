@@ -1,0 +1,17 @@
+{
+  "id": "tdmpc2",
+  "family": "TD-MPC",
+  "loader": "custom_torch",
+  "checkpoint": null,
+  "reference_repo": "https://github.com/nicklashansen/tdmpc2",
+  "modality": "state/pixel (controle continu, robotique)",
+  "supports_predictor": true,
+  "compatible_tests": [
+    "T9",
+    "T12"
+  ],
+  "execution_tier": "job_async",
+  "license": "open-weight",
+  "paper_id": "arxiv:2310.16828",
+  "access_notes": "Modele base sur un world model latent utilise pour la planification (Model Predictive Control). Code et checkpoints publies pour plusieurs benchmarks de controle continu."
+}

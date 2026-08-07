@@ -1,0 +1,17 @@
+{
+  "id": "nvidia_cosmos3_edge",
+  "family": "Cosmos",
+  "loader": "diffusers_custom",
+  "checkpoint": "nvidia/Cosmos3-Edge",
+  "reference_repo": "https://github.com/nvidia/cosmos",
+  "modality": "video (generation conditionee texte/image/action)",
+  "supports_predictor": true,
+  "compatible_tests": [
+    "T8",
+    "T9"
+  ],
+  "execution_tier": "job_async",
+  "license": "open-weight",
+  "paper_id": "arxiv:2606.02800",
+  "access_notes": "Variante distillee et plus legere de NVIDIA Cosmos 3 (famille de world foundation models pour la Physical AI). Poids ouverts sous licence OpenMDW-1.1. Necessite le framework Cosmos ou Diffusers, pas transformers.AutoModel standard."
+}
