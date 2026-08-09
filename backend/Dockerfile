@@ -16,9 +16,9 @@ RUN useradd --create-home --shell /bin/bash app
 
 WORKDIR /app
 
-# Copier requirements.txt et installer les dépendances Python
+# Copier requirements.txt et installer les dépendances Python en tant qu'utilisateur app
 COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN chown -R app:app /app && su app -c "pip install --no-cache-dir --user -r requirements.txt"
 
 # --- Stage final ---
 FROM ${BASE_IMAGE}
@@ -28,9 +28,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
     && rm -rf /var/lib/apt/lists/*
 
-# Copier l'utilisateur et les packages installés depuis builder
-COPY --from=builder /home/app/.local /home/app/.local
+# Créer l'utilisateur app
 RUN useradd --create-home --shell /bin/bash app
+
+# Copier les packages installés depuis builder (depuis /home/app/.local car installé en tant qu'app)
+COPY --from=builder /home/app/.local /home/app/.local
 
 WORKDIR /app
 
