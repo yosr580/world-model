@@ -27,15 +27,15 @@ def run_test(model_id: str, test_id: str, db: Session = Depends(get_db)):
     if test_id not in TEST_RUNNERS:
         raise HTTPException(status_code=501, detail=f"Test {test_id} non implemente cote inference service")
 
-    try:
-        model = load_model(manifest)
-    except ValueError as e:
-        raise HTTPException(status_code=501, detail=f"Loader non supporte: {str(e)}")
-
     runner = TEST_RUNNERS[test_id]
+
     if test_id == "T8":
-        result = runner(model, model_id, manifest)
+        result = runner(None, model_id, manifest)
     else:
+        try:
+            model = load_model(manifest)
+        except ValueError as e:
+            raise HTTPException(status_code=501, detail=f"Loader non supporte: {str(e)}")
         result = runner(model, model_id)
 
     test_result = TestResult(
