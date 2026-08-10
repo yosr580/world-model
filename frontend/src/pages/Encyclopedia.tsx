@@ -1,16 +1,8 @@
+import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../api/client'
-import { ModelCard } from '../components/ModelCard'
-
-type ModelItem = {
-  id: string
-  name: string
-  family: string
-  modality: string
-  license: string
-  verified_reproducible: boolean
-  created_at: string
-}
+import { ModelCardContainer, type ModelItem } from '../components/ModelCard'
+import { TaxonomyFilters } from '../components/TaxonomyFilters'
 
 const fetchModels = async (): Promise<ModelItem[]> => {
   const response = await api.get('/models/')
@@ -22,6 +14,12 @@ export function Encyclopedia() {
     queryKey: ['models'],
     queryFn: fetchModels,
   })
+
+  const [filteredModels, setFilteredModels] = useState<ModelItem[]>([])
+
+  useEffect(() => {
+    setFilteredModels(data ?? [])
+  }, [data])
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 text-slate-100">
@@ -79,17 +77,22 @@ export function Encyclopedia() {
         </div>
       </section>
 
-      <section className="mt-10 grid gap-6 lg:grid-cols-2">
+      <section className="mt-10">
         {isLoading ? (
-          <div className="col-span-full rounded-[2rem] border border-slate-700 bg-slate-900/80 p-8 text-center text-slate-300">
+          <div className="rounded-[2rem] border border-slate-700 bg-slate-900/80 p-8 text-center text-slate-300">
             Chargement des modèles...
           </div>
         ) : error ? (
-          <div className="col-span-full rounded-[2rem] border border-rose-500 bg-rose-500/10 p-8 text-center text-rose-300">
+          <div className="rounded-[2rem] border border-rose-500 bg-rose-500/10 p-8 text-center text-rose-300">
             Impossible de charger les modèles. Vérifie que l'API backend est active sur <code>http://localhost:8000</code>.
           </div>
         ) : (
-          data?.map((model) => <ModelCard key={model.id} model={model} />)
+          <>
+            {data && data.length > 0 && (
+              <TaxonomyFilters models={data} onFilterChange={setFilteredModels} />
+            )}
+            <ModelCardContainer models={filteredModels} />
+          </>
         )}
       </section>
     </main>
