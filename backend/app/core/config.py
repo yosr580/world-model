@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     API_V1_PREFIX: str = "/api/v1"
 
     # Database
-    DATABASE_URL: str = "postgresql+psycopg2://postgres:postgres@localhost:5432/world_models"
+    DATABASE_URL: str = "postgresql+psycopg://postgres:postgres@localhost:5432/world_models"
     DATABASE_POOL_SIZE: int = 10
     DATABASE_MAX_OVERFLOW: int = 20
 
@@ -42,12 +42,17 @@ class Settings(BaseSettings):
     MODEL_CACHE_DIR: str = "/app/models_cache"
     DEFAULT_DEVICE: str = "cpu"  # "cuda" si GPU dispo
 
+    # NVIDIA NIM
+    NVIDIA_NIM_API_KEY: str = ""
+    NVIDIA_NIM_BASE_URL: str = "https://integrate.api.nvidia.com/v1"
+    NVIDIA_NIM_MODEL: str = "nvidia/nemotron-3-ultra-550b-a55b"
+
     # Scraping
     ARXIV_MAX_RESULTS: int = 100
     SCRAPING_INTERVAL_HOURS: int = 24
 
     class Config:
-        env_file = ".env"
+        env_file = "../infra/.env"
         env_file_encoding = "utf-8"
         case_sensitive = True
 
