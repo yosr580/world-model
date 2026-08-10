@@ -14,6 +14,9 @@ export function Navbar() {
           <Link to="/encyclopedia" className="transition hover:text-cyan-200">
             Encyclopédie
           </Link>
+          <Link to="/lab" className="transition hover:text-cyan-200">
+            Laboratoire
+          </Link>
           <a
             href="https://github.com/yosr580/world-model"
             target="_blank"

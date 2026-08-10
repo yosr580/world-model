@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     API_V1_PREFIX: str = "/api/v1"
 
     # Database
-    DATABASE_URL: str = "postgresql+psycopg://postgres:postgres@localhost:5432/world_models"
+    DATABASE_URL: str = "postgresql+psycopg2://postgres:postgres@localhost:5432/world_models"
     DATABASE_POOL_SIZE: int = 10
     DATABASE_MAX_OVERFLOW: int = 20
 

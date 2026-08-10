@@ -6,3 +6,13 @@ export const api = axios.create({
     'Content-Type': 'application/json',
   },
 })
+
+export async function runTest(modelId: string, testId: string) {
+  const response = await api.post(`/tests/run?model_id=${modelId}&test_id=${testId}`)
+  return response.data
+}
+
+export async function sendChatMessage(message: string) {
+  const response = await api.post('/chat/message', { message })
+  return response.data
+}
