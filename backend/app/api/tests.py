@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.db.models import Model, TestResult
 from app.inference.loaders import load_model
-from app.inference.tests import t1_structure_gap, t8_output_type
+from app.inference.tests import t1_structure_gap, t8_output_type, t9_latent_prediction, t12_action_planning
 import uuid
 
 router = APIRouter()
@@ -11,6 +11,8 @@ router = APIRouter()
 TEST_RUNNERS = {
     "T1": t1_structure_gap.run,
     "T8": t8_output_type.run,
+    "T9": t9_latent_prediction.run,
+    "T12": t12_action_planning.run,
 }
 
 @router.post("/run")

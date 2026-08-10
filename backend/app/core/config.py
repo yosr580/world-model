@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings
+from pydantic import field_validator
 from typing import List
 
 
@@ -42,14 +43,20 @@ class Settings(BaseSettings):
     MODEL_CACHE_DIR: str = "/app/models_cache"
     DEFAULT_DEVICE: str = "cpu"  # "cuda" si GPU dispo
 
-    # NVIDIA NIM
-    NVIDIA_NIM_API_KEY: str = ""
-    NVIDIA_NIM_BASE_URL: str = "https://integrate.api.nvidia.com/v1"
-    NVIDIA_NIM_MODEL: str = "nvidia/nemotron-3-ultra-550b-a55b"
-
     # Scraping
     ARXIV_MAX_RESULTS: int = 100
     SCRAPING_INTERVAL_HOURS: int = 24
+    # Groq (chatbot)
+    GROQ_API_KEY: str = ""
+    GROQ_BASE_URL: str = "https://api.groq.com/openai/v1"
+    GROQ_MODEL: str = "llama-3.3-70b-versatile"
+
+    @field_validator("DEBUG", mode="before")
+    @classmethod
+    def normalize_debug_value(cls, value):
+        if isinstance(value, str) and value.lower() in {"release", "production", "prod"}:
+            return False
+        return value
 
     class Config:
         env_file = "../infra/.env"
